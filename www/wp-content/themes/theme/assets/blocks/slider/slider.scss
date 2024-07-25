@@ -1,0 +1,135 @@
+.slider {
+  position: relative;
+  width: 100%;
+  height: auto; // Обеспечивает, чтобы высота могла изменяться в зависимости от содержимого
+  display: flex;
+  flex-direction: column;
+  color: #FFF;
+  margin-bottom: 44px;
+  overflow-x: hidden;
+  min-height: 802px;
+
+  &__prev, &__next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  &__prev {
+    left: 10px;
+  }
+
+  &__next {
+    right: 10px;
+  }
+
+  &__counter {
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+    &-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      z-index: 100;
+    }
+
+    &-line {
+      height: 94px;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.5);
+      position: relative;
+
+      &:after {
+        display: block;
+        content: ' ';
+        height: 41px;
+        width: 2px;
+        background: #fff;
+        transition: top 0.5s ease-in-out;
+        top: var(--counter-line-position, 0px);
+        position: absolute;
+      }
+
+    }
+  }
+
+  &__inner {
+    position: relative;
+    top: 0;
+    width: 100%;
+  }
+
+  &__item {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%; // Установите высоту в 100% от контейнера слайдера
+    display: flex;
+    align-items: center; // Центрирование содержимого по вертикали
+    background: #ccc;
+  }
+
+  &__image {
+    //width: 100%;
+    //height: auto; // Установите высоту изображения в зависимости от его содержимого
+  }
+
+  &__wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center; // Центрирование содержимого по горизонтали
+    padding: 20px; // Дополнительное пространство
+  }
+
+  &__title {
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 63.8px;
+    margin-bottom: 10px;
+  }
+
+  &__subtitle {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 21.76px;
+    margin-bottom: 40px;
+  }
+
+  &__link {
+    margin-bottom: 30px;
+    padding: 9px 32px;
+    max-width: 160px;
+    border-radius: 50px;
+    color: #000;
+    background: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 21.76px;
+    font-weight: 500;
+  }
+
+  &__benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

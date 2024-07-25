@@ -1,0 +1,65 @@
+.header {
+
+  ul, li {
+    list-style: none;
+  }
+
+  &-logo {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    text-decoration: none;
+
+
+    &__text {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 21.76px;
+      color: #000;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+  }
+
+  &__wrapper {
+    display: flex;
+    gap: 96px;
+    align-items: center;
+  }
+
+  &-menu {
+    display: flex;
+    justify-content: space-between;
+    gap: 26px;
+
+    &__link {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 21.76px;
+      color: #737373;
+      transition: .3s ease-out;
+      text-decoration: none;
+
+      &.active, &:hover {
+        color: #000;
+      }
+    }
+  }
+
+  &__button {
+    background: #000;
+    color: #FFF;
+    padding: 9px 32px;
+    border-radius: 50px;
+    max-width: 160px;
+    text-decoration: none;
+  }
+
+
+
+}

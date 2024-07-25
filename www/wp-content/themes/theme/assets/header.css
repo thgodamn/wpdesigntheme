@@ -1,0 +1,52 @@
+.header ul, .header li {
+  list-style: none;
+}
+.header-logo {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  text-decoration: none;
+}
+.header-logo__text {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 21.76px;
+  color: #000;
+}
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  align-items: center;
+}
+.header__wrapper {
+  display: flex;
+  gap: 96px;
+  align-items: center;
+}
+.header-menu {
+  display: flex;
+  justify-content: space-between;
+  gap: 26px;
+}
+.header-menu__link {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 21.76px;
+  color: #737373;
+  transition: 0.3s ease-out;
+  text-decoration: none;
+}
+.header-menu__link.active, .header-menu__link:hover {
+  color: #000;
+}
+.header__button {
+  background: #000;
+  color: #FFF;
+  padding: 9px 32px;
+  border-radius: 50px;
+  max-width: 160px;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=header.css.map */

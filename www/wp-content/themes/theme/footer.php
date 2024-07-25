@@ -1,83 +1,65 @@
 <?php wp_footer(); ?>
 
+<?php include 'inc/Walker_Nav_Footer.php' ?>
+<?php include 'inc/Walker_Nav_SubFooter.php' ?>
 
 <div class="footer">
+    <div class="container">
 
-    <div class="footer__wrap">
+        <div class="footer__wrapper">
 
-        <div class="footer__logo footer-logo">
-            <div class="footer-logo__img"></div>
-            <div class="footer-logo__text"></div>
-        </div>
-
-        <div class="footer__menu footer-menu">
-
-            <div class="footer-menu__column">
-                <div class="footer-menu__column-list">
-                    <div class="footer-menu__title">Top destinations</div>
-                    <div class="footer-menu__item">Serengeti National Park</div>
-                    <div class="footer-menu__item">Kilimanjaro</div>
-                    <div class="footer-menu__item">Zanzibar</div>
-                    <div class="footer-menu__item">Ngorongoro Conservation Area</div>
-                    <div class="footer-menu__item">Lake Manyara</div>
-                    <div class="footer-menu__item">Lake Natron</div>
-                    <div class="footer-menu__item">Arusha National Park</div>
-                    <div class="footer-menu__item">Selous Game Reserve</div>
-                    <div class="footer-menu__item">Tarangire National Park</div>
-                </div>
+            <div>
+                <a href="/" class="footer__logo footer-logo">
+                    <div class="footer-logo__img"><img src="<?= get_template_directory_uri()."/assets/img/logo-footer.png"; ?>" alt=""></div>
+                    <div class="footer-logo__text">SAFARI</div>
+                </a>
             </div>
 
-            <div class="footer-menu__column">
-                <div class="footer-menu__column-list">
-                    <div class="footer-menu__title">Top destinations</div>
-                    <div class="footer-menu__item">Serengeti National Park</div>
-                    <div class="footer-menu__item">Kilimanjaro</div>
-                    <div class="footer-menu__item">Zanzibar</div>
-                    <div class="footer-menu__item">Ngorongoro Conservation Area</div>
-                    <div class="footer-menu__item">Lake Manyara</div>
-                    <div class="footer-menu__item">Lake Natron</div>
-                    <div class="footer-menu__item">Arusha National Park</div>
-                    <div class="footer-menu__item">Selous Game Reserve</div>
-                    <div class="footer-menu__item">Tarangire National Park</div>
-                </div>
-                <div class="footer-menu__button">Book a tour</div>
-            </div>
-
-        </div>
+            <?php
+            if (has_nav_menu('footer-menu')) {
+                wp_nav_menu(array(
+                    'theme_location' => 'footer-menu',
+                    'menu_class'     => 'footer__menu footer-menu',
+                    'walker'         => new Walker_Nav_Footer(),
+                ));
+            }
+            ?>
 
     </div>
 
-    <div class="footer__wrap">
+    <div class="footer__wrapper footer__wrapper-bottom">
 
         <div class="footer__submenu footer-sub-menu">
             <div class="footer-sub-menu__item">
-                © 2022 Tanzania
+                © <?= date('Y'); ?> Tanzania
             </div>
-            <div class="footer-sub-menu__item">
-                Terms and conditions
-            </div>
-            <div class="footer-sub-menu__item">
-                Privacy policy
-            </div>
+            <?php
+            if (has_nav_menu('sub-footer-menu')) {
+                wp_nav_menu(array(
+                    'theme_location' => 'sub-footer-menu',
+                    'walker'         => new Walker_Nav_SubFooter(),
+                    'items_wrap' => '%3$s'
+                ));
+            }
+            ?>
         </div>
 
         <div class="footer__social-menu footer-social-menu">
-            <a class="footer-social-menu__item">
-                <img src="" alt="">
+            <a href="/" class="footer-social-menu__item">
+                <img src="<?= get_template_directory_uri()."/assets/img/icon-instagram.png"; ?>" alt="">
             </a>
-            <a class="footer-social-menu__item">
-                <img src="" alt="">
+            <a href="/" class="footer-social-menu__item">
+                <img src="<?= get_template_directory_uri()."/assets/img/icon-facebook.png"; ?>" alt="">
             </a>
-            <a class="footer-social-menu__item">
-                <img src="" alt="">
+            <a href="/" class="footer-social-menu__item">
+                <img src="<?= get_template_directory_uri()."/assets/img/icon-twitter.png"; ?>" alt="">
             </a>
-            <a class="footer-social-menu__item">
-                <img src="" alt="">
+            <a href="/" class="footer-social-menu__item">
+                <img src="<?= get_template_directory_uri()."/assets/img/icon-pinterest.png"; ?>" alt="">
             </a>
         </div>
 
     </div>
-
 
 
 </div>

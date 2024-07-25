@@ -1,13 +1,8 @@
-jQuery(document).ready(function($) {
-    // Ваш JS код для слайдера
-    console.log('calc init');
-});
-
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('calculate-button').addEventListener('click', function() {
-        var num1 = document.getElementById('num1').value;
-        var num2 = document.getElementById('num2').value;
-        var operation = document.getElementById('operation').value;
+    document.getElementById('calculator__operation').addEventListener('click', function() {
+        var num1 = document.getElementById('calculator__num1').value;
+        var num2 = document.getElementById('calculator__num2').value;
+        var operation = document.getElementById('calculator__operation').value;
 
         fetch(calculatorApi.apiUrl, {
             method: 'POST',
@@ -23,19 +18,19 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.result !== undefined) {
-                    document.getElementById('calculator-result').textContent = 'Результат: ' + data.result;
+                    document.getElementById('calculator-result').textContent = 'Result: ' + data.result;
                 } else if (data.code) {
-                    document.getElementById('calculator-result').textContent = 'Ошибка: ' + data.message;
+                    document.getElementById('calculator-result').textContent = 'Error: ' + data.message;
                 }
             })
             .catch(error => {
-                console.error('Ошибка:', error);
-                document.getElementById('calculator-result').textContent = 'Ошибка: Произошла ошибка';
+                console.error('Error:', error);
+                document.getElementById('calculator-result').textContent = 'Error: an error has occurred';
             });
     });
 });
 
 // Устанавливаем URL API динамически
 var calculatorApi = {
-    apiUrl: document.getElementById('calculate-button').dataset.apiUrl
+    apiUrl: document.getElementById('calculator__operation').dataset.apiUrl
 };

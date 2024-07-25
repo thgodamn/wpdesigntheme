@@ -11,47 +11,53 @@ $num2 = get_field('num2');
 ?>
 
 <div class="calculator">
-    <?php if ($image): ?>
-        <div class="calculator__image">
-            <img src="<?php echo esc_url($image); ?>" alt="Calculator Image" class="calculator__img">
-        </div>
-    <?php endif; ?>
-    <?php if ($subtitle): ?>
-        <div class="calculator__subtitle">
-            <?php echo nl2br(esc_html($subtitle)); ?>
-        </div>
-    <?php endif; ?>
-    <?php if ($title): ?>
-        <h2 class="calculator__title">
-            <?php echo nl2br(esc_html($title)); ?>
-        </h2>
-    <?php endif; ?>
-    <div class="calculator__inputs">
-        <?php if ($square_miles): ?>
-            <div class="calculator__input-group">
-                <label for="square-miles" class="calculator__label">Square Miles:</label>
-                <input type="text" id="square-miles" class="calculator__input" value="<?php echo esc_attr($square_miles); ?>" readonly>
+    <div class="container">
+        <div class="calculator__inner">
+
+            <?php if ($image): ?>
+                <div class="calculator__image">
+                    <img src="<?php echo esc_url($image); ?>" alt="Calculator Image" class="calculator__img">
+                </div>
+            <?php endif; ?>
+
+            <div class="calculator__wrapper">
+                <?php if ($subtitle): ?>
+                    <div class="calculator__subtitle">
+                        <?php echo nl2br(esc_html($subtitle)); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($title): ?>
+                    <h2 class="calculator__title">
+                        <?php echo nl2br(esc_html($title)); ?>
+                    </h2>
+                <?php endif; ?>
+                <div class="calculator__row">
+                    <div class="calculator__info">
+                        <div class="calculator__info-value"><?php echo esc_attr($square_miles); ?></div>
+                        <div class="calculator__info-label">Square Miles</div>
+                    </div>
+                    <div class="calculator__info">
+                        <div class="calculator__info-value"><?php echo esc_attr($percent); ?></div>
+                        <div class="calculator__info-label">Percent</div>
+                    </div>
+                </div>
+
+                <div class="calculator__text">Vacation calculator</div>
+                <div class="calculator__inputs">
+                    <input type="number" id="calculator__num1" class="calculator__input" value="<?php echo esc_attr($num1); ?>" >
+<!--                    <input type="text" id="calculator__operation" data-api-url="--><?php //echo esc_url(rest_url('my-custom/v1/calculate')); ?><!--" class="calculator__input" value="--><?php //echo esc_attr($operation); ?><!--" >-->
+                    <select id="calculator__operation" data-api-url="<?php echo esc_url(rest_url('my-custom/v1/calculate')); ?>" class="calculator__input">
+                        <option value="+">+</option>
+                        <option value="-">-</option>
+                        <option value="*">*</option>
+                        <option value="/">/</option>
+                    </select>
+                    <input type="number" id="calculator__num2" class="calculator__input" value="<?php echo esc_attr($num2); ?>" >
+                </div>
+                <div id="calculator-result" class="calculator__result">Result: N/A</div>
+
             </div>
-        <?php endif; ?>
-        <?php if ($percent): ?>
-            <div class="calculator__input-group">
-                <label for="percent" class="calculator__label">Percent:</label>
-                <input type="text" id="percent" class="calculator__input" value="<?php echo esc_attr($percent); ?>" readonly>
-            </div>
-        <?php endif; ?>
-        <div class="calculator__input-group">
-            <label for="num1" class="calculator__label">Number 1:</label>
-            <input type="number" id="num1" class="calculator__input" value="<?php echo esc_attr($num1); ?>" readonly>
+
         </div>
-        <div class="calculator__input-group">
-            <label for="operation" class="calculator__label">Operation:</label>
-            <input type="text" id="operation" class="calculator__input" value="<?php echo esc_attr($operation); ?>" readonly>
-        </div>
-        <div class="calculator__input-group">
-            <label for="num2" class="calculator__label">Number 2:</label>
-            <input type="number" id="num2" class="calculator__input" value="<?php echo esc_attr($num2); ?>" readonly>
-        </div>
-        <button id="calculate-button" class="calculator__button" data-api-url="<?php echo esc_url(rest_url('my-custom/v1/calculate')); ?>">Calculate</button>
-        <div id="calculator-result" class="calculator__result">Результат: N/A</div>
     </div>
 </div>

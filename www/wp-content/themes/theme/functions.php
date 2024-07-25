@@ -27,6 +27,15 @@ function debug_logx($value)
     fclose($h);
 }
 
+function debug($value) {
+    echo '<pre>'; var_dump($value); echo '</pre>';
+}
+
+function add_viewport_meta_tag() {
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+}
+add_action('wp_head', 'add_viewport_meta_tag');
+
 function theme_enqueue_styles() {
     // Регистрация стилей global, header, footer
     wp_enqueue_style('header-style', get_template_directory_uri() . '/assets/header.css');
@@ -35,7 +44,7 @@ function theme_enqueue_styles() {
 
     // Регистрация стилей и скриптов slider
     wp_register_style('slider-style', get_template_directory_uri() . '/assets/blocks/slider/slider.css', array(), '1.0');
-    wp_register_script('slider-script', get_template_directory_uri() . '/assets/blocks/slider/slider.js', array('jquery'), '1.0', true);
+    wp_register_script('slider-script', get_template_directory_uri() . '/assets/blocks/slider/slider.js', array(), '1.0', true);
 
     // Регистрация стилей и скриптов calculator
     wp_register_style('calculator-style', get_template_directory_uri() . '/assets/blocks/calculator/calculator.css', array(), '1.0');
@@ -50,6 +59,15 @@ function theme_enqueue_styles() {
     wp_enqueue_script('calculator-script');
 }
 add_action('wp_enqueue_scripts', 'theme_enqueue_styles');
+
+//ускоряем загрузку frontend, убираем jquery)))
+function remove_default_jquery() {
+    if (!is_admin()) {
+        wp_deregister_script('jquery');
+        wp_dequeue_script('jquery');
+    }
+}
+add_action('wp_enqueue_scripts', 'remove_default_jquery');
 
 function my_custom_admin_styles() {
     // Убедитесь, что CSS-файл находится в папке вашей темы
@@ -405,3 +423,20 @@ function register_calculate_rest_route() {
     ));
 }
 add_action('rest_api_init', 'register_calculate_rest_route');
+
+
+function register_menu() {
+    register_nav_menu('header-menu', __('Header Menu'));
+    register_nav_menu('footer-menu', __('Footer Menu'));
+    register_nav_menu('sub-footer-menu', __('Sub Footer Menu'));
+
+}
+add_action('init', 'register_menu');
+
+function remove_nav_menu_container($args = array()) {
+    if ($args['theme_location'] == 'sub-footer-menu') {
+        $args['container'] = false;
+    }
+    return $args;
+}
+add_filter('wp_nav_menu_args', 'remove_nav_menu_container');
