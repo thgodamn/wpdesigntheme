@@ -22,8 +22,8 @@ Calculator (ACF):
 
 Write to hosts file
 ```
-#wpdatasync.local
-127.0.0.1 wpdatasync.local
+#wpdesigntheme.local
+127.0.0.1 wpdesigntheme.local
 ```
 
 ## Links
