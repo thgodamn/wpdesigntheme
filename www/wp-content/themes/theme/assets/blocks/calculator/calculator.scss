@@ -8,13 +8,23 @@
     @media (max-width: 768px) {
       flex-direction: column;
       gap: 20px;
+
+      &--first {
+        flex-direction: column-reverse;
+      }
     }
   }
 
   &__row {
-    display: flex;
+    display: grid;
     gap: 56px;
     margin-bottom: 47px;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    
+    @media (max-width: 768px) {
+      column-gap: 54px;
+      row-gap: 34px;
+    }
   }
 
   &__text {
@@ -30,6 +40,10 @@
       font-weight: 400;
       font-size: 45px;
       line-height: 47.7px;
+      @media (max-width: 768px) {
+        font-size: 30px;
+        line-height: 31.8px;
+      }
     }
     &-label {
       font-size: 14px;
@@ -49,6 +63,10 @@
     line-height: 21.76px;
     font-size: 16px;
     font-weight: 500;
+
+    @media (max-width: 768px) {
+      font-size: 12px;
+    }
   }
 
   &__title {
@@ -56,6 +74,12 @@
     font-size: 50px;
     font-weight: 600;
     margin-bottom: 47px;
+    
+    @media (max-width: 768px) {
+      font-size: 36px;
+      margin-bottom: 20px;
+      line-height: 38.16px;
+    }
   }
 
   &__image {
@@ -71,7 +95,52 @@
     
   }
   &__input {
+    font-weight: 400;
     padding: 15px 19px;
     width: 160px;
+    line-height: 19.04px;
+    appearance: none;
+    border-radius: 0;
+    border: 1px solid #000;
+  }
+
+  &__result {
+    font-size: 18px;
+    line-height: 19.08px;
+    &-value {
+      font-weight: 600;
+    }
+  }
+
+  &__operation {
+    min-width: 159px;
+    font-size: 24px;
+    line-height: 32.64px;
+    padding: 0 17px;
+
+    appearance: none;
+    background-color: white;
+    border: 1px solid #000;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray"><path d="M7 10l5 5 5-5z"/></svg>'); /* Стрелочка */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+
+    &:focus {
+      outline: none;
+      border-color: #5b9dd9;
+      box-shadow: 0 0 5px rgba(81, 167, 232, 1);
+    }
+
+    & option {
+      background-color: white; /* Цвет фона опций */
+      color: black; /* Цвет текста опций */
+      padding: 10px; /* Внутренний отступ */
+      font-size: 24px; /* Размер шрифта */
+      line-height: 32.64px; /* Высота строки */
+    }
   }
 }

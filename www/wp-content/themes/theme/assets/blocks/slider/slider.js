@@ -1,106 +1,143 @@
 document.addEventListener("DOMContentLoaded", function() {
     const slider = document.querySelector('.slider');
     const slides = document.querySelectorAll('.slider__item');
-    // const prevButton = document.querySelector('.slider__prev');
-    // const nextButton = document.querySelector('.slider__next');
+    const slides2 = document.querySelectorAll('.slider__item .slider__text-image, .slider__item .slider__accordion');
+    const prevButton = document.querySelector('.slider__prev');
+    const nextButton = document.querySelector('.slider__next');
     let currentIndex = 0;
     let startX, endX;
     const totalSlides = slides.length;
     const counterLine = document.querySelector('.slider__counter-line');
     const counterNum = document.querySelector('.slider__counter-num');
-    // Calculate step size
-    const stepSize = (94 - 41) / (totalSlides - 1); // Distance to move per slide
+    // Рассчитать размер шага
+    const stepSize = (94 - 41) / (totalSlides - 1); // Расстояние перемещения за слайд
+    var maxSlideHeight = 0;
+    var animationTime = 500;
+    const slideIntervalTime = 30000; // 30 секунд
+    let slideInterval;
 
-    // Initialize slides position
+    // Инициализация позиции слайдов
     slides.forEach((slide, index) => {
         slide.style.left = `${index * 100}%`;
+        if (maxSlideHeight < slide.scrollHeight) maxSlideHeight = slide.scrollHeight;
     });
 
-    // Function to update counter line position
-    // function updateCounterLine(index) {
-    //     const newPosition = index * stepSize;
-    //     console.log([
-    //         '.slider__counter-line:after',
-    //         `top: ${newPosition}px;`
-    //     ]);
-    //     document.styleSheets[0].addRule(
-    //         '.slider__counter-line:after',
-    //         `top: ${newPosition}px;`
-    //     );
-    // }
+    const accordion_slides = document.querySelectorAll('.slider__item--accordion');
+    slides.forEach((slide, index) => {
+        slide.style.minHeight = `${maxSlideHeight}px`;
+    });
 
-    // Function to update counter line position
+    var accordionItems = document.querySelectorAll('.slider__accordion-item');
+
+    accordionItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+            this.classList.toggle('active');
+            animationTime = 500;
+            updateSliderHeight();
+        });
+    });
+
+    // Функция обновления позиции линии счётчика
     function updateCounterLine(index) {
         const newPosition = index * stepSize;
         counterLine.style.setProperty('--counter-line-position', `${newPosition}px`);
     }
 
+    // Функция обновления номера счётчика
     function updateCounterNum(index) {
-        counterNum.textContent = String(index+1).padStart(2, '0');
+        counterNum.textContent = String(index + 1).padStart(2, '0');
     }
 
-    // Function to show slide
+    // Функция показа слайда
     function showSlide(index) {
         const offset = index * -100;
-        slides.forEach(slide => {
+        slides.forEach((slide, i) => {
             slide.style.transition = 'transform 0.5s ease-in-out';
             slide.style.transform = `translateX(${offset}%)`;
+            if (i === index) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
         });
         updateSliderHeight();
         updateCounterLine(index);
         updateCounterNum(index);
     }
 
-    // Function to update slider height
+    // Функция обновления высоты слайдера
     function updateSliderHeight() {
-        let maxHeight = 0;
-        slides.forEach(slide => {
-            slide.style.height = '100%'; // Reset height
-            const height = slide.scrollHeight;
-            if (height > maxHeight) {
-                maxHeight = height;
-            }
+        const activeSlide = document.querySelector('.slider__item.active');
+        slides.forEach((slide, index) => {
+            if (maxSlideHeight < slide.scrollHeight) maxSlideHeight = slide.scrollHeight;
         });
-        slider.style.height = `${maxHeight}px`;
+        if (activeSlide) {
+            slider.style.height = `${activeSlide.scrollHeight}px`;
+        }
+
+        if (animationTime > 0)
+            setTimeout(updateSliderHeight, 1);
+        animationTime--;
     }
 
-    // Next button click handler
-    // nextButton.addEventListener('click', () => {
-    //     currentIndex = (currentIndex + 1) % slides.length;
-    //     showSlide(currentIndex);
-    // });
-    //
-    // // Prev button click handler
-    // prevButton.addEventListener('click', () => {
-    //     currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    //     showSlide(currentIndex);
-    // });
+    // Функция запуска автоматического переключения слайдов
+    function startSlideInterval() {
+        slideInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }, slideIntervalTime);
+    }
 
-    // Touch start event
+    // Функция остановки автоматического переключения слайдов
+    function stopSlideInterval() {
+        clearInterval(slideInterval);
+    }
+
+    // Обработчик клика на кнопку "следующий"
+    nextButton.addEventListener('click', () => {
+        stopSlideInterval();
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+        startSlideInterval();
+    });
+
+    // Обработчик клика на кнопку "предыдущий"
+    prevButton.addEventListener('click', () => {
+        stopSlideInterval();
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(currentIndex);
+        startSlideInterval();
+    });
+
+    // Обработчик начала касания
     slider.addEventListener('touchstart', function(e) {
+        stopSlideInterval();
         startX = e.touches[0].pageX;
     });
 
-    // Touch end event
+    // Обработчик окончания касания
     slider.addEventListener('touchend', function(e) {
         endX = e.changedTouches[0].pageX;
         handleSwipe();
+        startSlideInterval();
     });
 
-    // Mouse down event
+    // Обработчик начала перетаскивания мышью
     slider.addEventListener('mousedown', function(e) {
+        stopSlideInterval();
         startX = e.pageX;
         slider.style.cursor = 'grabbing';
     });
 
-    // Mouse up event
+    // Обработчик окончания перетаскивания мышью
     slider.addEventListener('mouseup', function(e) {
         endX = e.pageX;
         slider.style.cursor = 'grab';
         handleSwipe();
+        startSlideInterval();
     });
 
-    // Handle swipe
+    // Обработчик свайпа
     function handleSwipe() {
         if (startX - endX > 100) {
             currentIndex = (currentIndex + 1) % slides.length;
@@ -110,7 +147,8 @@ document.addEventListener("DOMContentLoaded", function() {
         showSlide(currentIndex);
     }
 
-    // Initial display
+    // Изначальное отображение
     showSlide(currentIndex);
     window.addEventListener('resize', updateSliderHeight);
+    startSlideInterval();
 });

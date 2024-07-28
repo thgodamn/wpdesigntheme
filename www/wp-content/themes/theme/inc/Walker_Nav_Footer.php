@@ -41,7 +41,7 @@ class Walker_Nav_Footer extends Walker_Nav_Menu {
 
         // Check if we're at the last level and if it's depth 0
         if ($depth == 0 && $this->depth_0_counter == 2) {
-            $output .= "$indent</div><a href='/' class='footer-menu__button'>Book a tour</a></ul>\n";
+            $output .= "$indent</div><a href='/' class='footer-menu__button desktop'>Book a tour</a></ul>\n";
         } else $output .= "$indent</div></ul>\n";
     }
 }

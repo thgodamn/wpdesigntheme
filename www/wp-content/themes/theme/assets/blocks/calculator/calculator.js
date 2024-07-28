@@ -1,8 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('calculator__operation').addEventListener('click', function() {
-        var num1 = document.getElementById('calculator__num1').value;
-        var num2 = document.getElementById('calculator__num2').value;
-        var operation = document.getElementById('calculator__operation').value;
+
+    function handleClick(event) {
+
+        console.log(event);
+
+        var parent_inputs = event.target.parentElement;
+        var parent_block = parent_inputs.parentElement;
+
+        console.log(parent);
+
+        var num1 = parent_inputs.querySelector('.calculator__input-num1').value;
+        var num2 = parent_inputs.querySelector('.calculator__input-num2').value;
+        var operation = parent_inputs.querySelector('.calculator__operation').value;
 
         fetch(calculatorApi.apiUrl, {
             method: 'POST',
@@ -18,19 +27,25 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.result !== undefined) {
-                    document.getElementById('calculator-result').textContent = 'Result: ' + data.result;
+                    parent_block.querySelector('.calculator__result-value').textContent = data.result;
                 } else if (data.code) {
-                    document.getElementById('calculator-result').textContent = 'Error: ' + data.message;
+                    parent_block.querySelector('.calculator__result-value').textContent = data.message;
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('calculator-result').textContent = 'Error: an error has occurred';
+                parent_block.querySelector('.calculator__result-value').textContent = 'Error: an error has occurred';
             });
-    });
-});
+    }
 
-// Устанавливаем URL API динамически
-var calculatorApi = {
-    apiUrl: document.getElementById('calculator__operation').dataset.apiUrl
-};
+    var clickInputs = document.querySelectorAll('.calculator__input , .calculator__operation');
+
+    clickInputs.forEach(function(element) {
+        // console.log(element);
+        element.addEventListener('click', handleClick);
+    });
+
+    var calculatorApi = {
+        apiUrl: document.querySelector('.calculator__operation').dataset.apiUrl
+    };
+});

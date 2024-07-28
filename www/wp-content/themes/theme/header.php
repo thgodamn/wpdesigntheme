@@ -18,21 +18,27 @@
                 if (has_nav_menu('header-menu')) {
                     wp_nav_menu(array(
                         'theme_location' => 'header-menu',
-                        'menu_class'     => 'header__menu header-menu',
+                        'menu_class'     => 'header__menu header-menu desktop',
                         'walker'         => new Walker_Nav_Header(),
                     ));
                 }
                 ?>
 
-<!--                <div class="header__menu header-menu">-->
-<!--                    <div class="header-menu__item">Home</div>-->
-<!--                    <div class="header-menu__item">Top destinations</div>-->
-<!--                    <div class="header-menu__item">Travel information</div>-->
-<!--                    <div class="header-menu__item">Contact Us</div>-->
-<!--                </div>-->
+                <div class="mobile">
+                    <?php
+                    if (has_nav_menu('header-menu')) {
+                        wp_nav_menu(array(
+                            'theme_location' => 'header-menu',
+                            'menu_class'     => 'header__menu header-menu mobile',
+                            'walker'         => new Walker_Nav_Header(),
+                        ));
+                    }
+                    ?>
+                </div>
             </div>
 
-            <a href="/" class="header__button">Book a tour</a>
+            <div class="header-menu__toggle mobile"><img src="<?= get_template_directory_uri()."/assets/img/menu-toggle.svg" ?>" alt=""></div>
+            <a href="/" class="header__button desktop">Book a tour</a>
 
         </div>
     </div>

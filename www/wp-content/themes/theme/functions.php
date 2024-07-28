@@ -42,6 +42,9 @@ function theme_enqueue_styles() {
     wp_enqueue_style('footer-style', get_template_directory_uri() . '/assets/footer.css');
     wp_enqueue_style('global-style', get_template_directory_uri() . '/assets/global.css');
 
+    // Регистрация и подключение кастомного скрипта
+    wp_register_script('global-js', get_template_directory_uri() . '/assets/global.js', array(), '1.0', true);
+
     // Регистрация стилей и скриптов slider
     wp_register_style('slider-style', get_template_directory_uri() . '/assets/blocks/slider/slider.css', array(), '1.0');
     wp_register_script('slider-script', get_template_directory_uri() . '/assets/blocks/slider/slider.js', array(), '1.0', true);
@@ -55,6 +58,8 @@ function theme_enqueue_styles() {
         'apiUrl' => esc_url(rest_url('my-custom/v1/calculate'))
     ));
 
+
+    wp_enqueue_script('global-js');
     wp_enqueue_script('slider-script');
     wp_enqueue_script('calculator-script');
 }
@@ -319,6 +324,16 @@ function register_acf_field_groups() {
                     'instructions' => 'Upload an image for the calculator.',
                 ),
                 array(
+                    'key' => 'field_calculator_image_position',
+                    'label' => 'Image position',
+                    'name' => 'image_position',
+                    'type' => 'select',
+                    'choices' => array(
+                        'first' => 'first',
+                        'second' => 'second',
+                    ),
+                ),
+                array(
                     'key' => 'field_calculator_subtitle',
                     'label' => 'Subtitle',
                     'name' => 'subtitle',
@@ -340,6 +355,18 @@ function register_acf_field_groups() {
                     'key' => 'field_calculator_percent',
                     'label' => 'Percent',
                     'name' => 'percent',
+                    'type' => 'text',
+                ),
+                array(
+                    'key' => 'field_calculator_animals',
+                    'label' => 'Species of plains animals',
+                    'name' => 'animals',
+                    'type' => 'text',
+                ),
+                array(
+                    'key' => 'field_calculator_birds',
+                    'label' => 'Species of birds',
+                    'name' => 'birds',
                     'type' => 'text',
                 ),
                 array(

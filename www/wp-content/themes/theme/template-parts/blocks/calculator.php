@@ -1,20 +1,47 @@
 <?php
 // Получаем поля ACF для блока калькулятора
 $image = get_field('image'); // Получаем URL изображения
+$image_position = get_field('image_position');
 $subtitle = get_field('subtitle');
 $title = get_field('title');
 $square_miles = get_field('square_miles');
 $percent = get_field('percent');
+$animals = get_field('animals');
+$birds = get_field('birds');
 $num1 = get_field('num1');
 $operation = get_field('operation');
 $num2 = get_field('num2');
+
+// Выполняем вычисление в зависимости от $operation
+switch ($operation) {
+    case '+':
+        $result = $num1 + $num2;
+        break;
+    case '-':
+        $result = $num1 - $num2;
+        break;
+    case '*':
+        $result = $num1 * $num2;
+        break;
+    case '/':
+        // Проверка деления на ноль
+        if ($num2 != 0) {
+            $result = $num1 / $num2;
+        } else {
+            $result = 'Error: Division by zero';
+        }
+        break;
+    default:
+        $result = 'N/A';
+        break;
+}
 ?>
 
 <div class="calculator">
     <div class="container">
-        <div class="calculator__inner">
+        <div class="calculator__inner <?= ($image_position == 'first') ? 'calculator__inner--first' : 'calculator__inner--second' ?>">
 
-            <?php if ($image): ?>
+            <?php if ($image && $image_position == 'first'): ?>
                 <div class="calculator__image">
                     <img src="<?php echo esc_url($image); ?>" alt="Calculator Image" class="calculator__img">
                 </div>
@@ -40,23 +67,36 @@ $num2 = get_field('num2');
                         <div class="calculator__info-value"><?php echo esc_attr($percent); ?></div>
                         <div class="calculator__info-label">Percent</div>
                     </div>
+                    <div class="calculator__info mobile">
+                        <div class="calculator__info-value"><?php echo esc_attr($animals); ?></div>
+                        <div class="calculator__info-label">Species of plains animals</div>
+                    </div>
+                    <div class="calculator__info mobile">
+                        <div class="calculator__info-value"><?php echo esc_attr($birds); ?></div>
+                        <div class="calculator__info-label">Species of birds</div>
+                    </div>
                 </div>
 
-                <div class="calculator__text">Vacation calculator</div>
-                <div class="calculator__inputs">
-                    <input type="number" id="calculator__num1" class="calculator__input" value="<?php echo esc_attr($num1); ?>" >
-<!--                    <input type="text" id="calculator__operation" data-api-url="--><?php //echo esc_url(rest_url('my-custom/v1/calculate')); ?><!--" class="calculator__input" value="--><?php //echo esc_attr($operation); ?><!--" >-->
-                    <select id="calculator__operation" data-api-url="<?php echo esc_url(rest_url('my-custom/v1/calculate')); ?>" class="calculator__input">
-                        <option value="+">+</option>
-                        <option value="-">-</option>
-                        <option value="*">*</option>
-                        <option value="/">/</option>
+                <div class="calculator__text desktop">Vacation calculator</div>
+                <div class="calculator__inputs desktop">
+                    <input type="number" class="calculator__input calculator__input-num1" value="<?php echo esc_attr($num1); ?>" >
+                    <select data-api-url="<?php echo esc_url(rest_url('my-custom/v1/calculate')); ?>" class="calculator__operation">
+                        <option value="+" <?php selected($operation, '+'); ?>>+</option>
+                        <option value="-" <?php selected($operation, '-'); ?>>-</option>
+                        <option value="*" <?php selected($operation, '*'); ?>>*</option>
+                        <option value="/" <?php selected($operation, '/'); ?>>/</option>
                     </select>
-                    <input type="number" id="calculator__num2" class="calculator__input" value="<?php echo esc_attr($num2); ?>" >
+                    <input type="number" class="calculator__input calculator__input-num2" value="<?php echo esc_attr($num2); ?>" >
                 </div>
-                <div id="calculator-result" class="calculator__result">Result: N/A</div>
+                <div id="calculator-result" class="calculator__result desktop"><span class="calculator__result-text">Result:</span> <span class="calculator__result-value"><?php echo esc_attr($result) ?></span></div>
 
             </div>
+
+            <?php if ($image && $image_position == 'second'): ?>
+                <div class="calculator__image">
+                    <img src="<?php echo esc_url($image); ?>" alt="Calculator Image" class="calculator__img">
+                </div>
+            <?php endif; ?>
 
         </div>
     </div>

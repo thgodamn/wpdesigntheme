@@ -25,6 +25,8 @@
             }
             ?>
 
+            <a href="/" class="footer-menu__button mobile">Book a tour</a>
+
     </div>
 
     <div class="footer__wrapper footer__wrapper-bottom">
