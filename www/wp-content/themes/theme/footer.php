@@ -10,7 +10,7 @@
 
             <div>
                 <a href="/" class="footer__logo footer-logo">
-                    <div class="footer-logo__img"><img src="<?= get_template_directory_uri()."/assets/img/logo-footer.png"; ?>" alt=""></div>
+                    <div class="footer-logo__img"><img data-src="<?= get_template_directory_uri()."/assets/img/logo-footer.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt=""></div>
                     <div class="footer-logo__text">SAFARI</div>
                 </a>
             </div>

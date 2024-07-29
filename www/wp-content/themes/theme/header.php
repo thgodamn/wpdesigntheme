@@ -17,7 +17,7 @@
             <div class="header__wrapper">
                 <a class="header__logo header-logo" href="/">
                     <div class="header-logo__img">
-                        <img src="<?= get_template_directory_uri()."/assets/img/logo.png"; ?>" alt="">
+                        <img data-src="<?= get_template_directory_uri()."/assets/img/logo.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
                     </div>
                     <div class="header-logo__text">SAFARI</div>
                 </a>
@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div class="header-menu__toggle mobile"><img src="<?= get_template_directory_uri()."/assets/img/menu-toggle.svg" ?>" alt=""></div>
+            <div class="header-menu__toggle mobile"><img data-src="<?= get_template_directory_uri()."/assets/img/menu-toggle.svg" ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt=""></div>
             <a href="/" class="header__button desktop">Book a tour</a>
 
         </div>

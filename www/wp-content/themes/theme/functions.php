@@ -487,6 +487,12 @@ function fix_webp_display($result, $path) {
 add_filter('wp_check_filetype_and_ext', 'fix_webp_display', 10, 2);
 
 function remove_unused_styles() {
+    // Удаление стилей WordPress
     wp_dequeue_style('block-library');
+    wp_dequeue_style('wp-block-library-theme');
+
+    // Деактивация стандартных стилей
+    wp_deregister_style('block-library');
+    wp_deregister_style('wp-block-library-theme');
 }
-add_action('wp_enqueue_scripts', 'remove_unused_styles', 100);
+add_action('wp_enqueue_scripts', 'remove_unused_styles', 20);

@@ -11,13 +11,13 @@
   text-decoration: none;
 }
 .header-logo img {
-  max-width: 41px;
-  max-height: 41px;
+  width: 41px;
+  height: 41px;
 }
 @media (max-width: 768px) {
   .header-logo img {
-    max-width: 28px;
-    max-height: 28px;
+    width: 28px;
+    height: 28px;
   }
 }
 .header-logo__text {

@@ -15,6 +15,16 @@
   line-height: 21.76px;
   color: #FFF;
 }
+.footer-logo img {
+  width: 41px;
+  height: 41px;
+}
+@media (max-width: 768px) {
+  .footer-logo img {
+    width: 28px;
+    height: 28px;
+  }
+}
 .footer__wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
