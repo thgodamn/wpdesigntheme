@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var parent_inputs = event.target.parentElement;
         var parent_block = parent_inputs.parentElement;
 
-        console.log(parent);
-
         var num1 = parent_inputs.querySelector('.calculator__input-num1').value;
         var num2 = parent_inputs.querySelector('.calculator__input-num2').value;
         var operation = parent_inputs.querySelector('.calculator__operation').value;

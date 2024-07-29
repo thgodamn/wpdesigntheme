@@ -38,20 +38,20 @@ add_action('wp_head', 'add_viewport_meta_tag');
 
 function theme_enqueue_styles() {
     // Регистрация стилей global, header, footer
-    wp_enqueue_style('header-style', get_template_directory_uri() . '/assets/header.css');
-    wp_enqueue_style('footer-style', get_template_directory_uri() . '/assets/footer.css');
-    wp_enqueue_style('global-style', get_template_directory_uri() . '/assets/global.css');
+    wp_enqueue_style('header-style', get_template_directory_uri() . '/assets/header.min.css');
+    wp_enqueue_style('footer-style', get_template_directory_uri() . '/assets/footer.min.css');
+    wp_enqueue_style('global-style', get_template_directory_uri() . '/assets/global.min.css');
 
     // Регистрация и подключение кастомного скрипта
-    wp_register_script('global-js', get_template_directory_uri() . '/assets/global.js', array(), '1.0', true);
+    wp_register_script('global-js', get_template_directory_uri() . '/assets/global.min.js', array(), '1.0', true);
 
     // Регистрация стилей и скриптов slider
-    wp_register_style('slider-style', get_template_directory_uri() . '/assets/blocks/slider/slider.css', array(), '1.0');
-    wp_register_script('slider-script', get_template_directory_uri() . '/assets/blocks/slider/slider.js', array(), '1.0', true);
+    wp_register_style('slider-style', get_template_directory_uri() . '/assets/blocks/slider/slider.min.css', array(), '1.0');
+    wp_register_script('slider-script', get_template_directory_uri() . '/assets/blocks/slider/slider.min.js', array(), '1.0', true);
 
     // Регистрация стилей и скриптов calculator
-    wp_register_style('calculator-style', get_template_directory_uri() . '/assets/blocks/calculator/calculator.css', array(), '1.0');
-    wp_register_script('calculator-script', get_template_directory_uri() . '/assets/blocks/calculator/calculator.js', array(), '1.0', true);
+    wp_register_style('calculator-style', get_template_directory_uri() . '/assets/blocks/calculator/calculator.min.css', array(), '1.0');
+    wp_register_script('calculator-script', get_template_directory_uri() . '/assets/blocks/calculator/calculator.min.js', array(), '1.0', true);
 
     // Локализация скрипта с URL API
     wp_localize_script('calculator-script', 'calculatorApi', array(
@@ -76,7 +76,7 @@ add_action('wp_enqueue_scripts', 'remove_default_jquery');
 
 function my_custom_admin_styles() {
     // Убедитесь, что CSS-файл находится в папке вашей темы
-    wp_enqueue_style('custom-admin-styles', get_template_directory_uri() . '/assets/admin-styles.css');
+    wp_enqueue_style('custom-admin-styles', get_template_directory_uri() . '/assets/admin-styles.min.css');
 }
 add_action('admin_enqueue_scripts', 'my_custom_admin_styles');
 
@@ -467,3 +467,26 @@ function remove_nav_menu_container($args = array()) {
     return $args;
 }
 add_filter('wp_nav_menu_args', 'remove_nav_menu_container');
+
+function allow_webp_uploads($mimes) {
+    $mimes['webp'] = 'image/webp';
+    return $mimes;
+}
+add_filter('upload_mimes', 'allow_webp_uploads');
+
+function fix_webp_display($result, $path) {
+    $info = @getimagesize($path);
+    $mime = $info['mime'];
+
+    if ($mime === 'image/webp') {
+        $result['ext'] = 'webp';
+        $result['type'] = 'image/webp';
+    }
+    return $result;
+}
+add_filter('wp_check_filetype_and_ext', 'fix_webp_display', 10, 2);
+
+function remove_unused_styles() {
+    wp_dequeue_style('block-library');
+}
+add_action('wp_enqueue_scripts', 'remove_unused_styles', 100);
