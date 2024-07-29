@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const slider = document.querySelector('.slider');
     const slides = document.querySelectorAll('.slider__item');
-    const slides2 = document.querySelectorAll('.slider__item .slider__text-image, .slider__item .slider__accordion');
     const prevButton = document.querySelector('.slider__prev');
     const nextButton = document.querySelector('.slider__next');
     let currentIndex = 0;
@@ -11,48 +10,68 @@ document.addEventListener("DOMContentLoaded", function() {
     const counterNum = document.querySelector('.slider__counter-num');
     // Рассчитать размер шага
     const stepSize = (94 - 41) / (totalSlides - 1); // Расстояние перемещения за слайд
-    var maxSlideHeight = 0;
-    var animationTime = 500;
-    const slideIntervalTime = 30000;  //30000; // 30 секунд
+    const slideIntervalTime = 5000;  //30000; // 30 секунд
     let slideInterval;
+
+    function ImageToCenter(slide) {
+        const image = slide.querySelector('.slider__image img');
+        const sliderWidth = slide.offsetWidth;
+        const sliderHeight = slide.offsetHeight;
+
+        // Устанавливаем размеры контейнера
+        slide.style.position = 'relative';
+        image.style.position = 'absolute';
+        image.style.top = '50%';
+        image.style.left = '50%';
+        image.style.transform = 'translate(-50%, -50%)'; // Центрирование изображения
+
+        // Устанавливаем размеры до загрузки
+        image.style.width = 'auto';
+        image.style.height = 'auto';
+
+        // Подождем, пока изображение загрузится
+        image.onload = () => {
+            // Получаем ширину и высоту изображения
+            const imageWidth = image.naturalWidth;
+            const imageHeight = image.naturalHeight;
+
+            if (imageWidth > sliderWidth) {
+                // Если изображение шире контейнера
+                image.style.width = 'auto';
+                image.style.left = `50%`; // Устанавливаем позицию по центру
+            } else {
+                // Если изображение меньше или равно ширине контейнера
+                image.style.width = '100%'; // Растягиваем изображение на весь контейнер
+            }
+
+            if (imageHeight > sliderHeight) {
+                // Если изображение выше контейнера
+                image.style.height = 'auto';
+                image.style.top = `50%`; // Устанавливаем позицию по центру
+            } else {
+                // Если изображение меньше или равно высоте контейнера
+                image.style.height = '100%'; // Растягиваем изображение на всю высоту контейнера
+            }
+        };
+
+        // Если изображение уже загружено
+        if (image.complete) {
+            image.onload();
+        }
+    }
 
     function loadSlideImage(slide) {
         var image = slide.querySelector('.slider__image img');
         var src = image.getAttribute('data-slide-src');
         if (src) {
             image.src = src;
-            // image.removeAttribute('data-src');
         }
     }
 
-    // Функция загрузки фона слайда
-    // function loadSlideBgImage(slide) {
-    //     var bg = slide.getAttribute('data-slide-bg');
-    //     if (bg) {
-    //         slide.style.backgroundImage = 'url(' + bg + ')';
-    //     }
-    // }
-
-    // Инициализация позиции слайдов
-    slides.forEach((slide, index) => {
-        slide.style.left = `${index * 100}%`;
-        if (maxSlideHeight < slide.scrollHeight) maxSlideHeight = slide.scrollHeight;
-    });
-
-    const accordion_slides = document.querySelectorAll('.slider__item--accordion');
-    slides.forEach((slide, index) => {
-        slide.style.minHeight = `${maxSlideHeight}px`;
-    });
-
-    slider.style.height = `${maxSlideHeight}px`;
-
     var accordionItems = document.querySelectorAll('.slider__accordion-item');
-
     accordionItems.forEach(function(item) {
         item.addEventListener('click', function() {
             this.classList.toggle('active');
-            animationTime = 500;
-            updateSliderHeight();
         });
     });
 
@@ -76,48 +95,21 @@ document.addEventListener("DOMContentLoaded", function() {
             if (i === index) {
                 slide.classList.add('active');
                 loadSlideImage(slide);
+                ImageToCenter(slide);
             } else {
                 slide.classList.remove('active');
             }
         });
-        updateSliderHeight();
         updateCounterLine(index);
         updateCounterNum(index);
     }
 
-    // Функция обновления высоты слайдера
-    function updateSliderHeight() {
-        const activeSlide = document.querySelector('.slider__item.active');
-        let maxHeight = 0;
-
-        // Если активный слайд существует
-        if (activeSlide) {
-            // Получаем все дочерние элементы, игнорируя элементы с position: absolute
-            const children = Array.from(activeSlide.children).filter(child => getComputedStyle(child).position !== 'absolute');
-
-            // Находим максимальную высоту среди всех дочерних элементов
-            children.forEach(child => {
-                maxHeight = Math.max(maxHeight, child.scrollHeight);
-            });
-
-            if (maxSlideHeight < maxHeight) maxSlideHeight = maxHeight;
-
-            // Устанавливаем высоту слайдера
-            slider.style.height = `${maxSlideHeight}px`;
-        }
-
-        // Обновляем высоту слайдера через небольшую задержку
-        if (animationTime > 0)
-            setTimeout(updateSliderHeight, 1);
-        animationTime--;
-    }
-
     // Функция запуска автоматического переключения слайдов
     function startSlideInterval() {
-        // slideInterval = setInterval(() => {
-        //     currentIndex = (currentIndex + 1) % slides.length;
-        //     showSlide(currentIndex);
-        // }, slideIntervalTime);
+        slideInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }, slideIntervalTime);
     }
 
     // Функция остановки автоматического переключения слайдов
@@ -179,17 +171,12 @@ document.addEventListener("DOMContentLoaded", function() {
         showSlide(currentIndex);
     }
 
+    // Центрируем при ресайзе
+    window.addEventListener('resize', () => {
+        ImageToCenter(slides[currentIndex]);
+    });
+
     // Изначальное отображение
     showSlide(currentIndex);
-    window.addEventListener('resize', function () {
-        maxSlideHeight = 0;
-        slides.forEach((slide, index) => {
-            slide.style.left = `${index * 100}%`;
-            if (maxSlideHeight < slide.scrollHeight) maxSlideHeight = slide.scrollHeight;
-        });
-        slider.style.height = `${maxSlideHeight}px`;
-
-        updateSliderHeight();
-    });
     startSlideInterval();
 });

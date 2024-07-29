@@ -216,7 +216,6 @@ function register_acf_field_groups() {
                                     'instructions' => 'Add a benefit item.',
                                 ),
                             ),
-                            'min' => 1,
                             'layout' => 'table',
                             'instructions' => 'Add benefits for this slide.',
                             'conditional_logic' => array(
