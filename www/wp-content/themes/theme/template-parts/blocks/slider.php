@@ -18,10 +18,13 @@ $slides = get_field('slider');
         <?php foreach ($slides as $slide): ?>
             <div
                 class="slider__item
-                 <?= ($slide['slide_type'] === 'image_text')? 'slider__item--image-text' : ''; ?>
-                 <?= ($slide['slide_type'] === 'accordion')? 'slider__item--accordion' : ''; ?>
+                 <?php echo ($slide['slide_type'] === 'image_text')? 'slider__item--image-text' : ''; ?>
+                 <?php echo ($slide['slide_type'] === 'accordion')? 'slider__item--accordion' : ''; ?>
                 "
-                data-bg="<?php echo esc_url($slide['image']); ?>"
+
+                <?php if (false && $slide['slide_type'] === 'image_text'): ?>
+                    data-slide-bg="<?php echo esc_url($slide['image']); ?>"
+                <?php endif; ?>
 
             >
                 <div class="slider__inner">
@@ -103,6 +106,11 @@ $slides = get_field('slider');
 
 
                 </div>
+                <?php if ($slide['image']): ?>
+                    <div class="slider__image">
+                        <img loading="lazy" data-slide-src="<?php echo esc_url($slide['image']); ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
+                    </div>
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>

@@ -75,7 +75,6 @@ function remove_default_jquery() {
 add_action('wp_enqueue_scripts', 'remove_default_jquery');
 
 function my_custom_admin_styles() {
-    // Убедитесь, что CSS-файл находится в папке вашей темы
     wp_enqueue_style('custom-admin-styles', get_template_directory_uri() . '/assets/admin-styles.min.css');
 }
 add_action('admin_enqueue_scripts', 'my_custom_admin_styles');

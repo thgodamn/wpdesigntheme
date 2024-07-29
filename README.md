@@ -1,5 +1,6 @@
 Theme For Wordpress  
 Author: Magomed Saybulaev  
+Url: https://h176557.srv12.test-hf.su/  
 
 Description:  Тема включает два основных блока: калькулятор и слайдер, оба построены с использованием Advanced Custom Fields (ACF). Тема написана с нуля, включает интеграцию с REST API и следует методологии БЭМ. Тема полностью построена на нативном JavaScript.  
 
@@ -16,6 +17,9 @@ Slider (ACF):
 
 Calculator (ACF):
 ![Slider Calculator](theme-2.jpg)
+
+PageSpeed Report:
+![Slider Calculator](theme-page-speed.jpg)
 
 
 ## Usage

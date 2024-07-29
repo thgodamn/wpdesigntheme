@@ -68,6 +68,7 @@
 .slider__inner {
   top: 0;
   width: 100%;
+  z-index: 100;
 }
 .slider__item {
   position: absolute;
@@ -216,6 +217,14 @@
 }
 .slider__accordion-subtitle {
   margin-bottom: 6px;
+}
+.slider__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  display: block;
 }
 .slider__link {
   margin-bottom: 30px;

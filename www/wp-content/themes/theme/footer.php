@@ -10,7 +10,7 @@
 
             <div>
                 <a href="/" class="footer__logo footer-logo">
-                    <div class="footer-logo__img"><img data-src="<?= get_template_directory_uri()."/assets/img/logo-footer.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt=""></div>
+                    <div class="footer-logo__img"><img loading="lazy"data-src="<?= get_template_directory_uri()."/assets/img/logo-footer.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt=""></div>
                     <div class="footer-logo__text">SAFARI</div>
                 </a>
             </div>
@@ -48,16 +48,16 @@
 
         <div class="footer__social-menu footer-social-menu">
             <a href="/" class="footer-social-menu__item">
-                <img data-src="<?= get_template_directory_uri()."/assets/img/icon-instagram.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
+                <img loading="lazy"data-src="<?= get_template_directory_uri()."/assets/img/icon-instagram.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
             </a>
             <a href="/" class="footer-social-menu__item">
-                <img data-src="<?= get_template_directory_uri()."/assets/img/icon-facebook.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
+                <img loading="lazy"data-src="<?= get_template_directory_uri()."/assets/img/icon-facebook.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
             </a>
             <a href="/" class="footer-social-menu__item">
-                <img data-src="<?= get_template_directory_uri()."/assets/img/icon-twitter.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
+                <img loading="lazy"data-src="<?= get_template_directory_uri()."/assets/img/icon-twitter.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
             </a>
             <a href="/" class="footer-social-menu__item">
-                <img data-src="<?= get_template_directory_uri()."/assets/img/icon-pinterest.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
+                <img loading="lazy"data-src="<?= get_template_directory_uri()."/assets/img/icon-pinterest.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
             </a>
         </div>
 

@@ -13,8 +13,25 @@ document.addEventListener("DOMContentLoaded", function() {
     const stepSize = (94 - 41) / (totalSlides - 1); // Расстояние перемещения за слайд
     var maxSlideHeight = 0;
     var animationTime = 500;
-    const slideIntervalTime = 30000; // 30 секунд
+    const slideIntervalTime = 30000;  //30000; // 30 секунд
     let slideInterval;
+
+    function loadSlideImage(slide) {
+        var image = slide.querySelector('.slider__image img');
+        var src = image.getAttribute('data-slide-src');
+        if (src) {
+            image.src = src;
+            // image.removeAttribute('data-src');
+        }
+    }
+
+    // Функция загрузки фона слайда
+    // function loadSlideBgImage(slide) {
+    //     var bg = slide.getAttribute('data-slide-bg');
+    //     if (bg) {
+    //         slide.style.backgroundImage = 'url(' + bg + ')';
+    //     }
+    // }
 
     // Инициализация позиции слайдов
     slides.forEach((slide, index) => {
@@ -26,6 +43,8 @@ document.addEventListener("DOMContentLoaded", function() {
     slides.forEach((slide, index) => {
         slide.style.minHeight = `${maxSlideHeight}px`;
     });
+
+    slider.style.height = `${maxSlideHeight}px`;
 
     var accordionItems = document.querySelectorAll('.slider__accordion-item');
 
@@ -56,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
             slide.style.transform = `translateX(${offset}%)`;
             if (i === index) {
                 slide.classList.add('active');
+                loadSlideImage(slide);
             } else {
                 slide.classList.remove('active');
             }
@@ -68,13 +88,25 @@ document.addEventListener("DOMContentLoaded", function() {
     // Функция обновления высоты слайдера
     function updateSliderHeight() {
         const activeSlide = document.querySelector('.slider__item.active');
-        slides.forEach((slide, index) => {
-            if (maxSlideHeight < slide.scrollHeight) maxSlideHeight = slide.scrollHeight;
-        });
+        let maxHeight = 0;
+
+        // Если активный слайд существует
         if (activeSlide) {
-            slider.style.height = `${activeSlide.scrollHeight}px`;
+            // Получаем все дочерние элементы, игнорируя элементы с position: absolute
+            const children = Array.from(activeSlide.children).filter(child => getComputedStyle(child).position !== 'absolute');
+
+            // Находим максимальную высоту среди всех дочерних элементов
+            children.forEach(child => {
+                maxHeight = Math.max(maxHeight, child.scrollHeight);
+            });
+
+            if (maxSlideHeight < maxHeight) maxSlideHeight = maxHeight;
+
+            // Устанавливаем высоту слайдера
+            slider.style.height = `${maxSlideHeight}px`;
         }
 
+        // Обновляем высоту слайдера через небольшую задержку
         if (animationTime > 0)
             setTimeout(updateSliderHeight, 1);
         animationTime--;
@@ -82,10 +114,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Функция запуска автоматического переключения слайдов
     function startSlideInterval() {
-        slideInterval = setInterval(() => {
-            currentIndex = (currentIndex + 1) % slides.length;
-            showSlide(currentIndex);
-        }, slideIntervalTime);
+        // slideInterval = setInterval(() => {
+        //     currentIndex = (currentIndex + 1) % slides.length;
+        //     showSlide(currentIndex);
+        // }, slideIntervalTime);
     }
 
     // Функция остановки автоматического переключения слайдов
@@ -149,6 +181,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Изначальное отображение
     showSlide(currentIndex);
-    window.addEventListener('resize', updateSliderHeight);
+    window.addEventListener('resize', function () {
+        maxSlideHeight = 0;
+        slides.forEach((slide, index) => {
+            slide.style.left = `${index * 100}%`;
+            if (maxSlideHeight < slide.scrollHeight) maxSlideHeight = slide.scrollHeight;
+        });
+        slider.style.height = `${maxSlideHeight}px`;
+
+        updateSliderHeight();
+    });
     startSlideInterval();
 });

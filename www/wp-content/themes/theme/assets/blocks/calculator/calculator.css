@@ -7,26 +7,39 @@
   justify-content: space-between;
   gap: 128px;
 }
+@media (max-width: 1024px) {
+  .calculator__inner {
+    gap: 64px;
+  }
+}
 @media (max-width: 768px) {
   .calculator__inner {
     flex-direction: column;
-    gap: 20px;
+    gap: 0;
   }
   .calculator__inner--first {
     flex-direction: column-reverse;
   }
 }
 .calculator__row {
-  display: grid;
-  gap: 56px;
+  display: flex;
+  flex-wrap: wrap;
   margin-bottom: 47px;
-  grid-template-columns: repeat(2, minmax(120px, 1fr));
 }
 @media (max-width: 768px) {
   .calculator__row {
     column-gap: 54px;
     row-gap: 34px;
+    margin-bottom: 39px;
   }
+}
+.calculator__info {
+  flex: 1 1 35%;
+  display: flex;
+  justify-content: start;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: baseline;
 }
 .calculator__text {
   font-size: 24px;
@@ -78,22 +91,35 @@
     line-height: 38.16px;
   }
 }
+.calculator__image {
+  width: 50%;
+  aspect-ratio: 1/1;
+}
+@media (max-width: 768px) {
+  .calculator__image {
+    width: 100%;
+  }
+}
 .calculator__image img {
   width: 100%;
+  aspect-ratio: 1/1;
 }
 .calculator__inputs {
   display: flex;
   gap: 14px;
+  flex-wrap: wrap;
   margin-bottom: 24px;
 }
 .calculator__input {
   font-weight: 400;
   padding: 15px 19px;
-  width: 160px;
   line-height: 19.04px;
   appearance: none;
   border-radius: 0;
   border: 1px solid #000;
+  width: 100%;
+  max-width: 160px;
+  flex: 1 1 calc((100% - 28px) / 3);
 }
 .calculator__result {
   font-size: 18px;
@@ -103,20 +129,21 @@
   font-weight: 600;
 }
 .calculator__operation {
-  min-width: 159px;
   font-size: 24px;
   line-height: 32.64px;
   padding: 0 17px;
   appearance: none;
-  background-color: white;
+  background-color: #fff;
   border: 1px solid #000;
   width: 100%;
   cursor: pointer;
   position: relative;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray"><path d="M7 10l5 5 5-5z"/></svg>'); /* Стрелочка */
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 16px;
+  max-width: 160px;
+  height: 51px;
+  flex: 1 1 calc((100% - 28px) / 3);
 }
 .calculator__operation:focus {
   outline: none;

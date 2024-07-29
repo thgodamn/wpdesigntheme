@@ -1,31 +1,53 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Функция для установки размеров изображения
-    function setImageSize(image, width, height) {
-        image.style.width = width + 'px';
-        image.style.height = height + 'px';
+    // Мобильное меню
+    var menuToggle = document.querySelector('.header-menu__toggle.mobile');
+    var mobileMenu = document.querySelector('.header__menu.header-menu.mobile');
+
+    menuToggle.addEventListener('click', function() {
+        // Toggle the 'active' class on the mobile menu
+        menuToggle.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+    });
+
+    //Отложенная загрузка изображений в видимой области для CSS background-image
+    var lazyBgItems = document.querySelectorAll('[data-bg]');
+    function loadBgImages() {
+        lazyBgItems.forEach(function(item) {
+            var bg = item.getAttribute('data-bg');
+            item.style.backgroundImage = 'url(' + bg + ')';
+            // item.removeAttribute('data-bg');
+        });
     }
 
-    // Функция для загрузки изображения и установки его размера
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var item = entry.target;
+                    var bg = item.getAttribute('data-bg');
+                    item.style.backgroundImage = 'url(' + bg + ')';
+                    // item.removeAttribute('data-bg');
+                    observer.unobserve(item);
+                }
+            });
+        });
+
+        lazyBgItems.forEach(function(item) {
+            observer.observe(item);
+        });
+    } else {
+        loadBgImages();
+    }
+
+    //Отложенная загрузка изображений в видимой области для Img
+    var lazyImages = document.querySelectorAll('img[data-src]');
     function loadImage(image) {
         var src = image.getAttribute('data-src');
         if (src) {
-            var tempImg = new Image();
-            tempImg.src = src;
-            tempImg.onload = function() {
-                // Устанавливаем src изображения
-                image.src = src;
-
-                // Устанавливаем размеры изображения
-                setImageSize(image, tempImg.width, tempImg.height);
-
-                // Удаляем атрибут data-src
-                // image.removeAttribute('data-src');
-            };
+            image.src = src;
+            // image.removeAttribute('data-src');
         }
     }
-
-    // Отложенная загрузка изображений в видимой области для Img
-    var lazyImages = document.querySelectorAll('img[data-src]');
 
     if ('IntersectionObserver' in window) {
         var observer = new IntersectionObserver(function(entries) {
@@ -48,34 +70,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Отложенная загрузка изображений в видимой области для CSS background-image
-    var lazyBgItems = document.querySelectorAll('[data-bg]');
 
-    function loadBgImages() {
-        lazyBgItems.forEach(function(item) {
-            var bg = item.getAttribute('data-bg');
-            item.style.backgroundImage = 'url(' + bg + ')';
-            // item.removeAttribute('data-bg');
-        });
-    }
-
-    if ('IntersectionObserver' in window) {
-        var bgObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    var item = entry.target;
-                    var bg = item.getAttribute('data-bg');
-                    item.style.backgroundImage = 'url(' + bg + ')';
-                    // item.removeAttribute('data-bg');
-                    bgObserver.unobserve(item);
-                }
-            });
-        });
-
-        lazyBgItems.forEach(function(item) {
-            bgObserver.observe(item);
-        });
-    } else {
-        loadBgImages();
-    }
 });
