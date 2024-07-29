@@ -1,0 +1,171 @@
+.calculator {
+  margin-bottom: 44px;
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 128px;
+
+    @media (max-width: 1024px) {
+      gap: 64px;
+    }
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 0;
+
+      &--first {
+        flex-direction: column-reverse;
+      }
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 47px;
+    
+    @media (max-width: 768px) {
+      column-gap: 54px;
+      row-gap: 34px;
+      margin-bottom: 39px;
+    }
+  }
+  &__info {
+    flex: 1 1 35%;
+    display: flex;
+    justify-content: start;
+    box-sizing: border-box;
+    flex-direction: column;
+    align-items: baseline;
+  }
+
+  &__text {
+    font-size: 24px;
+    line-height: 25.44px;
+    margin-bottom: 24px;
+  }
+
+
+
+  &__info {
+    &-value {
+      font-weight: 400;
+      font-size: 45px;
+      line-height: 47.7px;
+      @media (max-width: 768px) {
+        font-size: 30px;
+        line-height: 31.8px;
+      }
+    }
+    &-label {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 19.04px;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__subtitle {
+    color: #737373;
+    line-height: 21.76px;
+    font-size: 16px;
+    font-weight: 500;
+
+    @media (max-width: 768px) {
+      font-size: 12px;
+    }
+  }
+
+  &__title {
+    line-height: 53px;
+    font-size: 50px;
+    font-weight: 600;
+    margin-bottom: 47px;
+    
+    @media (max-width: 768px) {
+      font-size: 36px;
+      margin-bottom: 20px;
+      line-height: 38.16px;
+    }
+  }
+
+  &__image {
+
+    width: 50%;
+    aspect-ratio: 1 / 1;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  &__inputs {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  &__input {
+    font-weight: 400;
+    padding: 15px 19px;
+    line-height: 19.04px;
+    appearance: none;
+    border-radius: 0;
+    border: 1px solid #000;
+    width: 100%;
+    max-width: 160px;
+    flex: 1 1 calc((100% - 28px) / 3);
+  }
+
+  &__result {
+    font-size: 18px;
+    line-height: 19.08px;
+    &-value {
+      font-weight: 600;
+    }
+  }
+
+  &__operation {
+    font-size: 24px;
+    line-height: 32.64px;
+    padding: 0 17px;
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid #000;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    //background-image: url('calc-arrow-down.svg');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    max-width: 160px;
+    height: 51px;
+    flex: 1 1 calc((100% - 28px) / 3);
+
+    &:focus {
+      outline: none;
+      border-color: #5b9dd9;
+      box-shadow: 0 0 5px rgba(81, 167, 232, 1);
+    }
+
+    & option {
+      background-color: white; /* Цвет фона опций */
+      color: black; /* Цвет текста опций */
+      padding: 10px; /* Внутренний отступ */
+      font-size: 24px; /* Размер шрифта */
+      line-height: 32.64px; /* Высота строки */
+    }
+  }
+}

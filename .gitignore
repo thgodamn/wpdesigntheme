@@ -1,0 +1,5 @@
+.idea
+.vscode
+node_modules
+www/debug.log
+www/wp-content/uploads
