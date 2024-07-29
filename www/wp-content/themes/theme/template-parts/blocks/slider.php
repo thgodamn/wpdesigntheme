@@ -21,10 +21,10 @@ $slides = get_field('slider');
                  <?= ($slide['slide_type'] === 'image_text')? 'slider__item--image-text' : ''; ?>
                  <?= ($slide['slide_type'] === 'accordion')? 'slider__item--accordion' : ''; ?>
                 "
-                style="background-image: url('<?php echo esc_url($slide['image']); ?>');"
+                data-bg="<?php echo esc_url($slide['image']); ?>"
+
             >
                 <div class="slider__inner">
-
 
                     <?php if ($slide['slide_type'] === 'image_text'): ?>
 

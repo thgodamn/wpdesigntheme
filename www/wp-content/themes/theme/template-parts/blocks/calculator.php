@@ -43,7 +43,7 @@ switch ($operation) {
 
             <?php if ($image && $image_position == 'first'): ?>
                 <div class="calculator__image">
-                    <img src="<?php echo esc_url($image); ?>" alt="Calculator Image" class="calculator__img">
+                    <img data-src="<?php echo esc_url($image); ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Calculator Image" class="calculator__img">
                 </div>
             <?php endif; ?>
 

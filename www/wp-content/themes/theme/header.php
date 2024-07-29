@@ -1,4 +1,12 @@
-<?php wp_head(); ?>
+<!DOCTYPE html >
+<html lang="ru">
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo esc_attr(get_bloginfo('title')); ?></title>
+    <meta name="description" content="<?php echo esc_attr(get_bloginfo('description')); ?>">
+    <?php wp_head(); ?>
+</head>
 
 <?php include "inc/Walker_Nav_Header.php"; ?>
 

@@ -8,7 +8,7 @@ class Walker_Nav_Footer extends Walker_Nav_Menu {
         $this->depth_0_counter++;
 
         $indent = str_repeat("\t", $depth);
-        $output .= "\n$indent<ul class='footer-menu__column'><div class='footer-menu__column-list'>\n";
+        $output .= "\n$indent<ul class='footer-menu__column'><ul class='footer-menu__column-list'>\n";
     }
 
     // Start Element
@@ -41,7 +41,7 @@ class Walker_Nav_Footer extends Walker_Nav_Menu {
 
         // Check if we're at the last level and if it's depth 0
         if ($depth == 0 && $this->depth_0_counter == 2) {
-            $output .= "$indent</div><a href='/' class='footer-menu__button desktop'>Book a tour</a></ul>\n";
-        } else $output .= "$indent</div></ul>\n";
+            $output .= "$indent</ul><a href='/' class='footer-menu__button desktop'>Book a tour</a></ul>\n";
+        } else $output .= "$indent</ul></ul>\n";
     }
 }

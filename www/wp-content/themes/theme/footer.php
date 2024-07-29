@@ -48,16 +48,16 @@
 
         <div class="footer__social-menu footer-social-menu">
             <a href="/" class="footer-social-menu__item">
-                <img src="<?= get_template_directory_uri()."/assets/img/icon-instagram.png"; ?>" alt="">
+                <img data-src="<?= get_template_directory_uri()."/assets/img/icon-instagram.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
             </a>
             <a href="/" class="footer-social-menu__item">
-                <img src="<?= get_template_directory_uri()."/assets/img/icon-facebook.png"; ?>" alt="">
+                <img data-src="<?= get_template_directory_uri()."/assets/img/icon-facebook.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
             </a>
             <a href="/" class="footer-social-menu__item">
-                <img src="<?= get_template_directory_uri()."/assets/img/icon-twitter.png"; ?>" alt="">
+                <img data-src="<?= get_template_directory_uri()."/assets/img/icon-twitter.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
             </a>
             <a href="/" class="footer-social-menu__item">
-                <img src="<?= get_template_directory_uri()."/assets/img/icon-pinterest.png"; ?>" alt="">
+                <img data-src="<?= get_template_directory_uri()."/assets/img/icon-pinterest.png"; ?>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
             </a>
         </div>
 
