@@ -60,8 +60,8 @@ function theme_enqueue_styles() {
 
 
     wp_enqueue_script('global-js');
-    wp_enqueue_script('slider-script');
-    wp_enqueue_script('calculator-script');
+//    wp_enqueue_script('slider-script');
+//    wp_enqueue_script('calculator-script');
 }
 add_action('wp_enqueue_scripts', 'theme_enqueue_styles');
 
