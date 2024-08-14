@@ -4,8 +4,9 @@
   min-height: 650px;
 
   &-logo__img img {
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       max-width: 200px;
+
 
     }
   }

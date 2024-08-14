@@ -3,10 +3,9 @@
   position: relative;
   min-height: 650px;
 }
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .header-logo__img img {
     max-width: 200px;
-    
   }
 }
 .header__bg {
