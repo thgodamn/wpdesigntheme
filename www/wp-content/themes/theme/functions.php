@@ -37,31 +37,46 @@ function add_viewport_meta_tag() {
 add_action('wp_head', 'add_viewport_meta_tag');
 
 function theme_enqueue_styles() {
-    // Регистрация стилей global, header, footer
-    wp_enqueue_style('header-style', get_template_directory_uri() . '/assets/header.min.css');
-    wp_enqueue_style('footer-style', get_template_directory_uri() . '/assets/footer.min.css');
-    wp_enqueue_style('global-style', get_template_directory_uri() . '/assets/global.min.css');
 
-    // Регистрация и подключение кастомного скрипта
-    wp_register_script('global-js', get_template_directory_uri() . '/assets/global.min.js', array(), '1.0', true);
+    $current_template = get_page_template_slug();
+    if ($current_template === 'page-templates/template-spacex.php') {
+        // Регистрация стилей global, header, footer
+        wp_enqueue_style('header-style', get_template_directory_uri() . '/assets/spacex/header.min.css');
+        wp_enqueue_style('footer-style', get_template_directory_uri() . '/assets/spacex/footer.min.css');
+        wp_enqueue_style('global-style', get_template_directory_uri() . '/assets/spacex/global.min.css');
 
-    // Регистрация стилей и скриптов slider
-    wp_register_style('slider-style', get_template_directory_uri() . '/assets/blocks/slider/slider.min.css', array(), '1.0');
-    wp_register_script('slider-script', get_template_directory_uri() . '/assets/blocks/slider/slider.min.js', array(), '1.0', true);
+        // Регистрация и подключение кастомного скрипта
+        wp_register_script('global-js', get_template_directory_uri() . '/assets/spacex/global.min.js', array(), '1.0', true);
+        wp_enqueue_script('global-js');
+    } else {
+        // Регистрация стилей global, header, footer
+        wp_enqueue_style('header-style', get_template_directory_uri() . '/assets/header.min.css');
+        wp_enqueue_style('footer-style', get_template_directory_uri() . '/assets/footer.min.css');
+        wp_enqueue_style('global-style', get_template_directory_uri() . '/assets/global.min.css');
 
-    // Регистрация стилей и скриптов calculator
-    wp_register_style('calculator-style', get_template_directory_uri() . '/assets/blocks/calculator/calculator.min.css', array(), '1.0');
-    wp_register_script('calculator-script', get_template_directory_uri() . '/assets/blocks/calculator/calculator.min.js', array(), '1.0', true);
+        // Регистрация и подключение кастомного скрипта
+        wp_register_script('global-js', get_template_directory_uri() . '/assets/global.min.js', array(), '1.0', true);
 
-    // Локализация скрипта с URL API
-    wp_localize_script('calculator-script', 'calculatorApi', array(
-        'apiUrl' => esc_url(rest_url('my-custom/v1/calculate'))
-    ));
+        // Регистрация стилей и скриптов slider
+        wp_register_style('slider-style', get_template_directory_uri() . '/assets/blocks/slider/slider.min.css', array(), '1.0');
+        wp_register_script('slider-script', get_template_directory_uri() . '/assets/blocks/slider/slider.min.js', array(), '1.0', true);
+
+        // Регистрация стилей и скриптов calculator
+        wp_register_style('calculator-style', get_template_directory_uri() . '/assets/blocks/calculator/calculator.min.css', array(), '1.0');
+        wp_register_script('calculator-script', get_template_directory_uri() . '/assets/blocks/calculator/calculator.min.js', array(), '1.0', true);
+
+        // Локализация скрипта с URL API
+        wp_localize_script('calculator-script', 'calculatorApi', array(
+            'apiUrl' => esc_url(rest_url('my-custom/v1/calculate'))
+        ));
 
 
-    wp_enqueue_script('global-js');
-//    wp_enqueue_script('slider-script');
-//    wp_enqueue_script('calculator-script');
+        wp_enqueue_script('global-js');
+//        wp_enqueue_script('slider-script');
+//        wp_enqueue_script('calculator-script');
+    }
+
+
 }
 add_action('wp_enqueue_scripts', 'theme_enqueue_styles');
 
@@ -494,3 +509,188 @@ function remove_unused_styles() {
     wp_deregister_style('wp-block-library-theme');
 }
 add_action('wp_enqueue_scripts', 'remove_unused_styles', 20);
+
+
+
+
+
+//SPACEX PAGE
+
+
+function add_custom_header_fields() {
+
+    $current_template = get_page_template_slug();
+
+    // Проверяем, если это страница и она использует шаблон 'SpaceX'
+    if ($current_template === 'page-templates/template-spacex.php') {
+        add_meta_box(
+            'header_home_fields', // Идентификатор метабокса
+            'Настройки Header Home', // Название метабокса
+            'render_custom_header_fields', // Функция для отображения полей
+            'page', // Тип записи, на которую будет добавлен метабокс
+            'normal', // Позиция
+            'high' // Приоритет
+        );
+    }
+
+//    global $post;
+//
+//    // Проверяем, если это страница и она использует шаблон 'SpaceX'
+//    if ($post && get_page_template_slug($post->ID) === 'template-spacex.php') {
+//        add_meta_box(
+//            'header_home_fields', // Идентификатор метабокса
+//            'Настройки Header Home', // Название метабокса
+//            'render_custom_header_fields', // Функция для отображения полей
+//            'page', // Тип записи, на которую будет добавлен метабокс
+//            'normal', // Позиция
+//            'high' // Приоритет
+//        );
+//    }
+
+}
+add_action('add_meta_boxes', 'add_custom_header_fields');
+
+function render_custom_header_fields($post) {
+    wp_nonce_field('save_custom_header_fields', 'custom_header_fields_nonce');
+
+    // Получение значений полей
+    $header_title = get_post_meta($post->ID, '_header_title', true);
+    $header_subtitle = get_post_meta($post->ID, '_header_subtitle', true);
+    $header_button_text = get_post_meta($post->ID, '_header_button_text', true);
+    $header_button_url = get_post_meta($post->ID, '_header_button_url', true);
+
+    $header_adv_items = get_post_meta($post->ID, '_header_adv_items', true);
+
+    ?>
+    <!-- Поля заголовка, подзаголовка и кнопки -->
+    <p>
+        <label for="header_title">Заголовок:</label>
+        <input type="text" id="header_title" name="header_title" value="<?php echo esc_attr($header_title); ?>" size="30" />
+    </p>
+    <p>
+        <label for="header_subtitle">Подзаголовок:</label>
+        <input type="text" id="header_subtitle" name="header_subtitle" value="<?php echo esc_attr($header_subtitle); ?>" size="30" />
+    </p>
+    <p>
+        <label for="header_button_text">Текст кнопки:</label>
+        <input type="text" id="header_button_text" name="header_button_text" value="<?php echo esc_attr($header_button_text); ?>" size="30" />
+    </p>
+    <p>
+        <label for="header_button_url">URL кнопки:</label>
+        <input type="text" id="header_button_url" name="header_button_url" value="<?php echo esc_attr($header_button_url); ?>" size="30" />
+    </p>
+    <hr>
+
+    <div style="background: #CCC;">
+        <div>Приемущества:</div>
+        <button type="button" id="add-header-adv-item" class="button">Добавить элемент</button>
+
+        <!-- Повторяющиеся элементы -->
+        <div id="header-adv-container">
+            <?php
+            if (!empty($header_adv_items)) {
+                foreach ($header_adv_items as $index => $item) {
+                    ?>
+                    <div class="header-adv-item" data-index="<?php echo $index; ?>">
+                        <p>
+                            <label for="header_adv_label_first_<?php echo $index; ?>">Первый лейбл:</label>
+                            <input type="text" id="header_adv_label_first_<?php echo $index; ?>" name="header_adv_label_first[]" value="<?php echo esc_attr($item['label_first']); ?>" size="30" />
+                        </p>
+                        <p>
+                            <label for="header_adv_val_<?php echo $index; ?>">Значение:</label>
+                            <input type="text" id="header_adv_val_<?php echo $index; ?>" name="header_adv_val[]" value="<?php echo esc_attr($item['val']); ?>" size="30" />
+                        </p>
+                        <p>
+                            <label for="header_adv_label_<?php echo $index; ?>">Второй лейбл:</label>
+                            <input type="text" id="header_adv_label_<?php echo $index; ?>" name="header_adv_label[]" value="<?php echo esc_attr($item['label']); ?>" size="30" />
+                        </p>
+                        <button type="button" class="remove-header-adv-item button">Удалить элемент</button>
+                        <hr>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+    </div>
+
+    <script>
+        jQuery(document).ready(function($) {
+            $('#add-header-adv-item').on('click', function() {
+                var index = $('#header-adv-container .header-adv-item').length;
+                var newItem = `
+                <div class="header-adv-item" data-index="${index}">
+                    <p>
+                        <label for="header_adv_label_first_${index}">Первый лейбл:</label>
+                        <input type="text" id="header_adv_label_first_${index}" name="header_adv_label_first[]" size="30" />
+                    </p>
+                    <p>
+                        <label for="header_adv_val_${index}">Значение:</label>
+                        <input type="text" id="header_adv_val_${index}" name="header_adv_val[]" size="30" />
+                    </p>
+                    <p>
+                        <label for="header_adv_label_${index}">Второй лейбл:</label>
+                        <input type="text" id="header_adv_label_${index}" name="header_adv_label[]" size="30" />
+                    </p>
+                    <button type="button" class="remove-header-adv-item button">Удалить элемент</button>
+                    <hr>
+                </div>`;
+                $('#header-adv-container').append(newItem);
+            });
+
+            $('#header-adv-container').on('click', '.remove-header-adv-item', function() {
+                $(this).closest('.header-adv-item').remove();
+            });
+        });
+    </script>
+    <?php
+}
+
+function register_menu_spacex() {
+    register_nav_menu('header-menu-spacex', __('Header Menu SpaceX'));
+
+}
+add_action('init', 'register_menu_spacex');
+
+function save_custom_header_fields($post_id) {
+    if (!isset($_POST['custom_header_fields_nonce']) || !wp_verify_nonce($_POST['custom_header_fields_nonce'], 'save_custom_header_fields')) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    // Сохранение полей заголовка, подзаголовка и кнопки
+    if (isset($_POST['header_title'])) {
+        update_post_meta($post_id, '_header_title', sanitize_text_field($_POST['header_title']));
+    }
+    if (isset($_POST['header_subtitle'])) {
+        update_post_meta($post_id, '_header_subtitle', sanitize_text_field($_POST['header_subtitle']));
+    }
+    if (isset($_POST['header_button_text'])) {
+        update_post_meta($post_id, '_header_button_text', sanitize_text_field($_POST['header_button_text']));
+    }
+    if (isset($_POST['header_button_url'])) {
+        update_post_meta($post_id, '_header_button_url', sanitize_text_field($_POST['header_button_url']));
+    }
+
+    // Сохранение повторяющихся элементов
+    $header_adv_items = array();
+
+    if (isset($_POST['header_adv_label_first']) && is_array($_POST['header_adv_label_first'])) {
+        $count = count($_POST['header_adv_label_first']);
+        for ($i = 0; $i < $count; $i++) {
+            if (!empty($_POST['header_adv_label_first'][$i]) && !empty($_POST['header_adv_val'][$i]) && !empty($_POST['header_adv_label'][$i])) {
+                $header_adv_items[] = array(
+                    'label_first' => sanitize_text_field($_POST['header_adv_label_first'][$i]),
+                    'val' => sanitize_text_field($_POST['header_adv_val'][$i]),
+                    'label' => sanitize_text_field($_POST['header_adv_label'][$i]),
+                );
+            }
+        }
+    }
+
+    update_post_meta($post_id, '_header_adv_items', $header_adv_items);
+}
+add_action('save_post', 'save_custom_header_fields');

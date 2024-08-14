@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=MuseoModerno:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'MuseoModerno', sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  font-weight: 400;
+  word-break: break-word;
+
+}
+
+body {
+  background: #05131f;
+}
+
+ul, li {
+  list-style: none;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+
+  @media (max-width: 1200px) {
+    padding: 0 15px;
+  }
+
+}
+
+.desktop {
+  @media (max-width: 1200px) {
+    display: none!important;
+  }
+}
+
+.laptop {
+  @media (min-width: 1200px) {
+    display: none!important;
+  }
+}
+
+.mobile {
+  @media (min-width: 768px) {
+    display: none!important;
+  }
+}
+
+.none {
+  display: none!important;
+}
